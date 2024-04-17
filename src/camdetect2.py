@@ -1,12 +1,17 @@
 import cv2
+from pathlib import Path
 
-config_file = "ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt"
-frozen_model = "frozen_inference_graph.pb"
+# Get Absolute Path of the executed file
+file_path = Path(__file__).parent
+
+# Create an absolute file path to the sources required
+config_file = file_path.__str__() + "/ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt"
+frozen_model = file_path.__str__() + "/frozen_inference_graph.pb"
 
 model = cv2.dnn_DetectionModel(frozen_model, config_file)
 
 classLabels = []
-file_name = "coco.names"
+file_name = file_path.__str__() + "/coco.names"
 with open(file_name, 'rt') as fpt:
     classLabels = fpt.read().rstrip('\n').split('\n')
 
@@ -18,7 +23,7 @@ model.setInputScale(1 / 127.5)
 model.setInputMean((127.5, 127.5, 127.5))
 model.setInputSwapRB(True)
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 font_scale = 1
 font = cv2.FONT_HERSHEY_PLAIN
