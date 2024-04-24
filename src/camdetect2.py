@@ -1,3 +1,5 @@
+from typing import Optional
+
 import cv2
 
 config_file = "ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt"
@@ -22,6 +24,8 @@ cap = cv2.VideoCapture(0)
 
 font_scale = 1
 font = cv2.FONT_HERSHEY_PLAIN
+
+previous_phone_pos: Optional[tuple[int, int]] = None
 
 while True:
     ret, frame = cap.read()
@@ -66,6 +70,19 @@ while True:
 
                 if object_name == 'cell phone':
                     print(object_name, 'at', obj_coord)
+
+                    if not previous_phone_pos or previous_phone_pos != obj_coord:
+                        if previous_phone_pos:
+                            diff = (previous_phone_pos[0] - obj_coord[0], previous_phone_pos[1] - obj_coord[1])
+                            # print(diff)
+
+                            if diff[1] > 0 and abs(diff[1]) > 3:
+                                print("In sus")
+                            elif diff[1] < 0 and abs(diff[1]) > 3:
+                                print("In jos")
+
+                        previous_phone_pos = obj_coord
+                        # print(previous_phone_pos)
 
     cv2.imshow("Object Detection", frame)
 
