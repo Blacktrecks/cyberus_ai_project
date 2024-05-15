@@ -23,7 +23,7 @@ model.setInputScale(1 / 127.5)
 model.setInputMean((127.5, 127.5, 127.5))
 model.setInputSwapRB(True)
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 font_scale = 1
 font = cv2.FONT_HERSHEY_PLAIN
