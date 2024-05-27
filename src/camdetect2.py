@@ -3,6 +3,7 @@ from pathlib import Path
 from validateMBlockWin import focusToMblock
 from robotControl import RobotControl
 from config import *
+import time
 
 robot_control = RobotControl()
 
@@ -58,8 +59,6 @@ def getObjectPos(objectName):
     else:
         return 320 // 2, 320 // 2, current_area
 
-
-
 def centerObject(posX, posY, current_area):
     screen_center_x = 320 // 2
     screen_center_y = 320 // 2
@@ -69,12 +68,21 @@ def centerObject(posX, posY, current_area):
 
     focusToMblock()
     
-    robot_control.move_robot(error_x, error_y, current_area, robot_control.prev_area)
+    robot_control.move_robot(error_x, error_y)
 
-    robot_control.prev_area = current_area
+    # Check size threshold with tolerance for forward/backward movement
+    if current_area < SIZE_THRESHOLD - SIZE_TOLERANCE:
+        robot_control.start_moving_forward()
+    elif current_area > SIZE_THRESHOLD + SIZE_TOLERANCE:
+        robot_control.start_moving_backward()
+    else:
+        robot_control.stop_moving()
 
     if abs(error_x) < MOVE_THRESHOLD and abs(error_y) < MOVE_THRESHOLD:
         robot_control.stop_robot()
+
+    # Add a delay to test on-site accuracy
+    time.sleep(0.2)  # 100ms delay for better accuracy testing
 
 def robotRoutine():
     focusToMblock()

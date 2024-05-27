@@ -4,7 +4,7 @@
 OBJECT_NAME = 'mouse'
 CONF_THRESHOLD = 0.55
 SIZE_THRESHOLD = 10000
-SIZE_TOLERANCE = 0.1 * SIZE_THRESHOLD  # 10% of the size threshold
+SIZE_TOLERANCE = 2000  # Tolerance for object size
 
 # Camera settings
 CAMERA_INDEX = 1
@@ -20,6 +20,9 @@ MOVE_BACKWARD_KEY = 's'
 MOVE_LEFT_KEY = 'a'
 MOVE_RIGHT_KEY = 'd'
 STOP_KEY = 'x'
+MOVE_HAND_UP_KEY = 'q'
+MOVE_HAND_DOWN_KEY = 'e'
+STOP_HAND_KEY = 'z'
 
 # Paths
 CONFIG_FILE = "camDetectSrcs/ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt"
