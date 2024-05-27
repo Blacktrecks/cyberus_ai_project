@@ -1,10 +1,8 @@
-# config.py
-
 # Object detection settings
 OBJECT_NAME = 'mouse'
 CONF_THRESHOLD = 0.55
 SIZE_THRESHOLD = 10000
-SIZE_TOLERANCE = 2000  # Tolerance for object size
+SIZE_TOLERANCE = 5000  # Tolerance for object size
 
 # Camera settings
 CAMERA_INDEX = 1

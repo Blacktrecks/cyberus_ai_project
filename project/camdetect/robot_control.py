@@ -33,45 +33,40 @@ class RobotControl:
 
     def stop_moving(self):
         self.keyboard.release(MOVE_RIGHT_KEY)
-        print(f"Released '{MOVE_RIGHT_KEY}'")
         self.keyboard.release(MOVE_LEFT_KEY)
-        print(f"Released '{MOVE_LEFT_KEY}'")
         self.keyboard.release(MOVE_FORWARD_KEY)
-        print(f"Released '{MOVE_FORWARD_KEY}'")
         self.keyboard.release(MOVE_BACKWARD_KEY)
-        print(f"Released '{MOVE_BACKWARD_KEY}'")
         self.keyboard.press(STOP_KEY)
         self.keyboard.release(STOP_KEY)
-        print(f"Pressed and released '{STOP_KEY}' for stopping all movements")
+        print("Stopped all movements")
 
     def stop_hand_movement(self):
         self.keyboard.release(MOVE_HAND_UP_KEY)
-        print(f"Released '{MOVE_HAND_UP_KEY}'")
         self.keyboard.release(MOVE_HAND_DOWN_KEY)
-        print(f"Released '{MOVE_HAND_DOWN_KEY}'")
         self.keyboard.press(STOP_HAND_KEY)
         self.keyboard.release(STOP_HAND_KEY)
-        print(f"Pressed and released '{STOP_HAND_KEY}' for stopping hand motor")
+        print("Stopped hand motor")
 
-    def move_robot(self, error_x, error_y):
+    def move_robot(self, error_x, error_y, current_area):
         self.stop_moving()
+
+        # Horizontal movement
         if error_x > self.move_threshold:
-            self.start_moving_right()
-        elif error_x < -self.move_threshold:
             self.start_moving_left()
+        elif error_x < -self.move_threshold:
+            self.start_moving_right()
 
         # Hand movement based on vertical error
         if error_y > self.move_threshold:
-            self.start_moving_hand_up()
-        elif error_y < -self.move_threshold:
             self.start_moving_hand_down()
+        elif error_y < -self.move_threshold:
+            self.start_moving_hand_up()
 
-    def adjust_hand(self, error_y):
-        self.stop_hand_movement()
-        if error_y > self.move_threshold:
-            self.start_moving_hand_up()
-        elif error_y < -self.move_threshold:
-            self.start_moving_hand_down()
+        # Forward and backward movement based on object size
+        if current_area < SIZE_THRESHOLD - SIZE_TOLERANCE:
+            self.start_moving_forward()
+        elif current_area > SIZE_THRESHOLD + SIZE_TOLERANCE:
+            self.start_moving_backward()
 
     def stop_robot(self):
         self.stop_moving()

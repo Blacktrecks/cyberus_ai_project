@@ -5,18 +5,16 @@ import win32com.client as comclt
 import sys
 
 def get_mblock_handle():
-    # Search for MBlock windows by title
+    """Search for and return the handle of the MBlock window."""
     mblock_windows = gw.getWindowsWithTitle("mBlock v5.4.3")
-
-    # Check if MBlock window is found
     if mblock_windows:
-        # Return the handle of the first found MBlock window
         return mblock_windows[0]._hWnd
     else:
         print("mBlock window not found.")
         return None
 
 def enum_child_windows(hwnd, lParam):
+    global child_windows
     child_windows.append(hwnd)
     return True
 
@@ -27,17 +25,15 @@ def get_child_windows(parent_hwnd):
     return child_windows
 
 def focusToMblock():
-    # Get the handle of the MBlock window
+    """Focus the MBlock window."""
     hwnd = get_mblock_handle()
     if hwnd is None:
         print("Open mBlock application first")
         sys.exit(0)
+    
     if win32gui.GetForegroundWindow() != hwnd:
         win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
         win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
 
     wsh = comclt.Dispatch("WScript.Shell")
-    wsh.AppActivate("mBlock v5.4.3")  # Select another application
-
-# Get the handle of the MBlock window
-hwnd = get_mblock_handle()
+    wsh.AppActivate("mBlock v5.4.3")
