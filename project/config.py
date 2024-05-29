@@ -1,18 +1,18 @@
 # Object detection settings
-OBJECT_NAME = 'mouse'
+OBJECT_NAME = 'bottle'
 CONF_THRESHOLD = 0.55
 SIZE_THRESHOLD = 10000
-SIZE_TOLERANCE = 5000  # Tolerance for object size
+SIZE_TOLERANCE = 8000  # Tolerance for object size
 
 # Camera settings
 CAMERA_INDEX = 1
-INPUT_SIZE = (320, 320)
+INPUT_SIZE = (640, 480)
 INPUT_SCALE = 1 / 127.5
 INPUT_MEAN = (127.5, 127.5, 127.5)
 INPUT_SWAP_RB = True
 
 # Control settings
-MOVE_THRESHOLD = 5
+MOVE_THRESHOLD = 20
 MOVE_FORWARD_KEY = 'w'
 MOVE_BACKWARD_KEY = 's'
 MOVE_LEFT_KEY = 'a'

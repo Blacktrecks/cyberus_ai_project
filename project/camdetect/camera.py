@@ -2,6 +2,10 @@ import cv2
 from pathlib import Path
 from config import *
 
+from project.config import CONFIG_FILE, FROZEN_MODEL, LABELS_FILE, INPUT_SIZE, INPUT_MEAN, INPUT_SCALE, INPUT_SWAP_RB, \
+    CAMERA_INDEX
+
+
 def initCamera():
     """Initialize the camera and object detection model."""
     file_path = Path(__file__).parent.parent

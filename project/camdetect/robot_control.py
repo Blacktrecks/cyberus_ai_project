@@ -2,6 +2,10 @@ from pynput.keyboard import Controller
 from config import *
 import time
 
+from project.config import MOVE_THRESHOLD, MOVE_RIGHT_KEY, MOVE_LEFT_KEY, MOVE_FORWARD_KEY, MOVE_BACKWARD_KEY, \
+    MOVE_HAND_UP_KEY, MOVE_HAND_DOWN_KEY, STOP_KEY, STOP_HAND_KEY, SIZE_THRESHOLD, SIZE_TOLERANCE
+
+
 class RobotControl:
     def __init__(self):
         self.keyboard = Controller()
@@ -24,12 +28,14 @@ class RobotControl:
         print(f"Pressed '{MOVE_BACKWARD_KEY}' for moving backward")
 
     def start_moving_hand_up(self):
-        self.keyboard.press(MOVE_HAND_UP_KEY)
-        print(f"Pressed '{MOVE_HAND_UP_KEY}' for moving hand up")
+        # self.keyboard.press(MOVE_HAND_UP_KEY)
+        # print(f"Pressed '{MOVE_HAND_UP_KEY}' for moving hand up")
+        pass
 
     def start_moving_hand_down(self):
-        self.keyboard.press(MOVE_HAND_DOWN_KEY)
-        print(f"Pressed '{MOVE_HAND_DOWN_KEY}' for moving hand down")
+        # self.keyboard.press(MOVE_HAND_DOWN_KEY)
+        # print(f"Pressed '{MOVE_HAND_DOWN_KEY}' for moving hand down")
+        pass
 
     def stop_moving(self):
         self.keyboard.release(MOVE_RIGHT_KEY)
@@ -41,15 +47,14 @@ class RobotControl:
         print("Stopped all movements")
 
     def stop_hand_movement(self):
-        self.keyboard.release(MOVE_HAND_UP_KEY)
-        self.keyboard.release(MOVE_HAND_DOWN_KEY)
-        self.keyboard.press(STOP_HAND_KEY)
-        self.keyboard.release(STOP_HAND_KEY)
-        print("Stopped hand motor")
+        # self.keyboard.release(MOVE_HAND_UP_KEY)
+        # self.keyboard.release(MOVE_HAND_DOWN_KEY)
+        # self.keyboard.press(STOP_HAND_KEY)
+        # self.keyboard.release(STOP_HAND_KEY)
+        # print("Stopped hand motor")
+        pass
 
     def move_robot(self, error_x, error_y, current_area):
-        self.stop_moving()
-
         # Horizontal movement
         if error_x > self.move_threshold:
             self.start_moving_left()
@@ -67,6 +72,9 @@ class RobotControl:
             self.start_moving_forward()
         elif current_area > SIZE_THRESHOLD + SIZE_TOLERANCE:
             self.start_moving_backward()
+
+        time.sleep(0.2)  # 200ms delay for better accuracy testing
+        self.stop_moving()
 
     def stop_robot(self):
         self.stop_moving()

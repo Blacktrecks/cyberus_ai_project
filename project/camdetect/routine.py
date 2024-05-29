@@ -1,9 +1,10 @@
 import cv2
 import time
-from camdetect.object_detection import getObjectPos
-from camdetect.robot_control import RobotControl
-from config import *
-from utils.window_focus import focusToMblock
+
+from project.camdetect.object_detection import getObjectPos, cap
+from project.camdetect.robot_control import RobotControl
+from project.config import INPUT_SIZE, MOVE_THRESHOLD, OBJECT_NAME
+from project.utils.window_focus import focusToMblock
 
 robot_control = RobotControl()
 
@@ -28,7 +29,6 @@ def centerObject(posX, posY, current_area):
     if abs(error_x) < MOVE_THRESHOLD and abs(error_y) < MOVE_THRESHOLD:
         robot_control.stop_robot()
 
-    #time.sleep(0.2)  # 200ms delay for better accuracy testing
 
 def robotRoutine():
     """

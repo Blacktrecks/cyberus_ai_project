@@ -1,6 +1,7 @@
 import cv2
 from config import *
 from .camera import initCamera
+from ..config import CONF_THRESHOLD, SIZE_THRESHOLD, SIZE_TOLERANCE
 
 cap, model, classLabels, font, font_scale = initCamera()
 
