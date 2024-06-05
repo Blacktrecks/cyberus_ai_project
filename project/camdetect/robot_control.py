@@ -28,12 +28,12 @@ class RobotControl:
         print(f"Pressed '{MOVE_BACKWARD_KEY}' for moving backward")
 
     def start_moving_hand_up(self):
-        # self.keyboard.press(MOVE_HAND_UP_KEY)
+        self.keyboard.press(MOVE_HAND_UP_KEY)
         # print(f"Pressed '{MOVE_HAND_UP_KEY}' for moving hand up")
         pass
 
     def start_moving_hand_down(self):
-        # self.keyboard.press(MOVE_HAND_DOWN_KEY)
+        self.keyboard.press(MOVE_HAND_DOWN_KEY)
         # print(f"Pressed '{MOVE_HAND_DOWN_KEY}' for moving hand down")
         pass
 
@@ -47,25 +47,26 @@ class RobotControl:
         print("Stopped all movements")
 
     def stop_hand_movement(self):
-        # self.keyboard.release(MOVE_HAND_UP_KEY)
-        # self.keyboard.release(MOVE_HAND_DOWN_KEY)
-        # self.keyboard.press(STOP_HAND_KEY)
-        # self.keyboard.release(STOP_HAND_KEY)
-        # print("Stopped hand motor")
+        self.keyboard.release(MOVE_HAND_UP_KEY)
+        self.keyboard.release(MOVE_HAND_DOWN_KEY)
+        self.keyboard.press(STOP_HAND_KEY)
+        self.keyboard.release(STOP_HAND_KEY)
+        print("Stopped hand motor")
         pass
 
     def move_robot(self, error_x, error_y, current_area):
         # Horizontal movement
+        print("Error x " + str(error_x) + " Error y " + str(error_y))
         if error_x > self.move_threshold:
             self.start_moving_left()
         elif error_x < -self.move_threshold:
             self.start_moving_right()
 
-        # Hand movement based on vertical error
-        if error_y > self.move_threshold:
-            self.start_moving_hand_down()
-        elif error_y < -self.move_threshold:
-            self.start_moving_hand_up()
+        # # Hand movement based on vertical error
+        # if error_y > self.move_threshold:
+        #     self.start_moving_hand_down()
+        # elif error_y < -self.move_threshold:
+        #     self.start_moving_hand_up()
 
         # Forward and backward movement based on object size
         if current_area < SIZE_THRESHOLD - SIZE_TOLERANCE:
@@ -73,9 +74,8 @@ class RobotControl:
         elif current_area > SIZE_THRESHOLD + SIZE_TOLERANCE:
             self.start_moving_backward()
 
-        time.sleep(0.2)  # 200ms delay for better accuracy testing
-        self.stop_moving()
+
 
     def stop_robot(self):
         self.stop_moving()
-        self.stop_hand_movement()
+        # self.stop_hand_movement()

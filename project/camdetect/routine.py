@@ -25,6 +25,7 @@ def centerObject(posX, posY, current_area):
     focusToMblock()
 
     robot_control.move_robot(error_x, error_y, current_area)
+    time.sleep(0.35)  # 200ms delay for better accuracy testing
 
     if abs(error_x) < MOVE_THRESHOLD and abs(error_y) < MOVE_THRESHOLD:
         robot_control.stop_robot()
@@ -35,6 +36,7 @@ def robotRoutine():
     Main routine to continuously detect and center the object.
     """
     focusToMblock()
+
     while True:
         posX, posY, current_area = getObjectPos(OBJECT_NAME)
         print(f"x = {posX}, y = {posY}, area = {current_area}")

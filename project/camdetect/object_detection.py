@@ -1,7 +1,7 @@
 import cv2
 from config import *
 from .camera import initCamera
-from ..config import CONF_THRESHOLD, SIZE_THRESHOLD, SIZE_TOLERANCE
+from ..config import CONF_THRESHOLD, SIZE_THRESHOLD, SIZE_TOLERANCE, MOVE_THRESHOLD, INPUT_SIZE
 
 cap, model, classLabels, font, font_scale = initCamera()
 
@@ -31,15 +31,20 @@ def getObjectPos(objectName):
                 x_coord = int(boxes[0] + boxes[2] / 2)
                 y_coord = int(boxes[1] + boxes[3] / 2)
                 obj_coord = (x_coord, y_coord)
+
                 cv2.circle(frame, obj_coord, 2, (0, 0, 225), 2)
                 current_area = boxes[2] * boxes[3]
 
+                if object_name in objectName:
+                    break
+
+    print(object_name)
     cv2.imshow("Object Detection", frame)
 
-    if object_name == objectName:
-        if SIZE_THRESHOLD - SIZE_TOLERANCE <= current_area <= SIZE_THRESHOLD + SIZE_TOLERANCE:
-            return x_coord, y_coord, current_area
-        else:
-            return 320 // 2, 320 // 2, current_area
+    screen_center_x = INPUT_SIZE[0] // 2
+    screen_center_y = INPUT_SIZE[1] // 2
+
+    if object_name in objectName:
+        return x_coord, y_coord, current_area
     else:
-        return 320 // 2, 320 // 2, current_area
+        return screen_center_x, screen_center_y, SIZE_THRESHOLD
