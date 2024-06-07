@@ -92,12 +92,12 @@ class RobotControl:
         #     self.start_moving_hand_down()
         # elif error_y < -self.move_threshold:
         #     self.start_moving_hand_up()
-
-        # Forward and backward movement based on object size
-        if current_area < SIZE_THRESHOLD - SIZE_TOLERANCE:
-            self.start_moving_forward()
-        elif current_area > SIZE_THRESHOLD + SIZE_TOLERANCE:
-            self.start_moving_backward()
+        else:
+            # Forward and backward movement based on object size
+            if current_area < SIZE_THRESHOLD - SIZE_TOLERANCE:
+                self.start_moving_forward()
+            elif current_area > SIZE_THRESHOLD + SIZE_TOLERANCE:
+                self.start_moving_backward()
 
 
 
