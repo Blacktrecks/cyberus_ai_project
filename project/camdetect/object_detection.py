@@ -43,10 +43,13 @@ def getObjectPos(objectName):
                 if object_name in objectName:
                     break
 
-    print(object_name)
     cv2.imshow("Object Detection", frame)
 
     if object_name in objectName:
+        #print(f"Object Name: {object_name}\n"
+        #      f"x: {x_coord}\n"
+        #      f"y: {y_coord}"
+        #      f"current_area: {current_area}")
         return x_coord, y_coord, current_area
     else:
         return screen_center_x, screen_center_y, SIZE_THRESHOLD

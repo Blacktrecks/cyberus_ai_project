@@ -1,8 +1,8 @@
 # Object detection settings
-OBJECT_NAME = ['person']
+OBJECT_NAME = ['bottle']
 CONF_THRESHOLD = 0.55
-SIZE_THRESHOLD = 50000
-SIZE_TOLERANCE = 5000  # Tolerance for object size
+SIZE_THRESHOLD = 40000
+SIZE_TOLERANCE = 10000  # Tolerance for object size
 
 # Camera settings
 CAMERA_INDEX = 1
@@ -12,7 +12,7 @@ INPUT_MEAN = (127.5, 127.5, 127.5)
 INPUT_SWAP_RB = True
 
 # Control settingss
-MOVE_THRESHOLD = 30
+MOVE_THRESHOLD = 50
 MOVE_FORWARD_KEY = 'w'
 MOVE_BACKWARD_KEY = 's'
 MOVE_LEFT_KEY = 'a'

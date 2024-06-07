@@ -22,24 +22,24 @@ def centerObject(posX, posY, current_area):
     error_x = screen_center_x - posX
     error_y = screen_center_y - posY
 
-    focusToMblock()
+    #time.sleep(0.35)  # 200ms delay for better accuracy testing
 
-    robot_control.move_robot(error_x, error_y, current_area)
-    time.sleep(0.35)  # 200ms delay for better accuracy testing
+    focusToMblock()
 
     if abs(error_x) < MOVE_THRESHOLD and abs(error_y) < MOVE_THRESHOLD:
         robot_control.stop_robot()
+    else:
+        robot_control.move_robot(error_x, error_y, current_area)
 
 
 def robotRoutine():
     """
     Main routine to continuously detect and center the object.
     """
-    focusToMblock()
 
     while True:
         posX, posY, current_area = getObjectPos(OBJECT_NAME)
-        print(f"x = {posX}, y = {posY}, area = {current_area}")
+        #print(f"x = {posX}, y = {posY}, area = {current_area}")
         centerObject(posX, posY, current_area)
 
         if cv2.waitKey(2) & 0xFF == ord('q'):

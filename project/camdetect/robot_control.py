@@ -5,39 +5,64 @@ import time
 from project.config import MOVE_THRESHOLD, MOVE_RIGHT_KEY, MOVE_LEFT_KEY, MOVE_FORWARD_KEY, MOVE_BACKWARD_KEY, \
     MOVE_HAND_UP_KEY, MOVE_HAND_DOWN_KEY, STOP_KEY, STOP_HAND_KEY, SIZE_THRESHOLD, SIZE_TOLERANCE
 
+class Direction:
+    left = 0
+    right = 1
+    forward = 2
+    backward = 3
+    none = -1
 
 class RobotControl:
+    direction = Direction.none
     def __init__(self):
         self.keyboard = Controller()
         self.move_threshold = MOVE_THRESHOLD
 
+
     def start_moving_right(self):
-        self.keyboard.press(MOVE_RIGHT_KEY)
-        print(f"Pressed '{MOVE_RIGHT_KEY}' for moving right")
+        if(self.direction != Direction.right):
+            self.stop_moving()
+            self.keyboard.press(MOVE_RIGHT_KEY)
+            self.direction = Direction.right
+            print(f"Pressed '{MOVE_RIGHT_KEY}' for moving right")
+        print(f"Skip right")
 
     def start_moving_left(self):
-        self.keyboard.press(MOVE_LEFT_KEY)
-        print(f"Pressed '{MOVE_LEFT_KEY}' for moving left")
+        if(self.direction != Direction.left):
+            self.stop_moving()
+            self.keyboard.press(MOVE_LEFT_KEY)
+            self.direction = Direction.left
+            print(f"Pressed '{MOVE_LEFT_KEY}' for moving left")
+        print(f"Skip left")
 
     def start_moving_forward(self):
-        self.keyboard.press(MOVE_FORWARD_KEY)
-        print(f"Pressed '{MOVE_FORWARD_KEY}' for moving forward")
+        if(self.direction != Direction.forward):
+            self.stop_moving()
+            self.keyboard.press(MOVE_FORWARD_KEY)
+            self.direction = Direction.forward
+            print(f"Pressed '{MOVE_FORWARD_KEY}' for moving forward")
+        print(f"Skip forward")
 
     def start_moving_backward(self):
-        self.keyboard.press(MOVE_BACKWARD_KEY)
-        print(f"Pressed '{MOVE_BACKWARD_KEY}' for moving backward")
+        if(self.direction != Direction.backward):
+            self.stop_moving()
+            self.keyboard.press(MOVE_BACKWARD_KEY)
+            self.direction = Direction
+            print(f"Pressed '{MOVE_BACKWARD_KEY}' for moving backward")
+        print(f"Skip backward")
 
     def start_moving_hand_up(self):
         self.keyboard.press(MOVE_HAND_UP_KEY)
-        # print(f"Pressed '{MOVE_HAND_UP_KEY}' for moving hand up")
+        print(f"Pressed '{MOVE_HAND_UP_KEY}' for moving hand up")
         pass
 
     def start_moving_hand_down(self):
         self.keyboard.press(MOVE_HAND_DOWN_KEY)
-        # print(f"Pressed '{MOVE_HAND_DOWN_KEY}' for moving hand down")
+        print(f"Pressed '{MOVE_HAND_DOWN_KEY}' for moving hand down")
         pass
 
     def stop_moving(self):
+        self.direction = Direction.none
         self.keyboard.release(MOVE_RIGHT_KEY)
         self.keyboard.release(MOVE_LEFT_KEY)
         self.keyboard.release(MOVE_FORWARD_KEY)
