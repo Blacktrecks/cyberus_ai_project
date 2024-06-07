@@ -21,6 +21,9 @@ def getObjectPos(objectName):
     object_name = None
     current_area = 0
 
+    screen_center_x = INPUT_SIZE[0] // 2
+    screen_center_y = INPUT_SIZE[1] // 2
+
     if len(classIndex) != 0:
         for class_ix, conf, boxes in zip(classIndex.flatten(), confidence.flatten(), bbox):
             if class_ix <= 80:  # Filter classes within COCO dataset range
@@ -33,6 +36,8 @@ def getObjectPos(objectName):
                 obj_coord = (x_coord, y_coord)
 
                 cv2.circle(frame, obj_coord, 2, (0, 0, 225), 2)
+                cv2.line(frame, (screen_center_x + MOVE_THRESHOLD, 0), (screen_center_x + MOVE_THRESHOLD, INPUT_SIZE[1]), (0, 0, 225), 1)
+                cv2.line(frame, (screen_center_x - MOVE_THRESHOLD, 0), (screen_center_x - MOVE_THRESHOLD, INPUT_SIZE[1]), (0, 0, 225), 1)
                 current_area = boxes[2] * boxes[3]
 
                 if object_name in objectName:
@@ -40,9 +45,6 @@ def getObjectPos(objectName):
 
     print(object_name)
     cv2.imshow("Object Detection", frame)
-
-    screen_center_x = INPUT_SIZE[0] // 2
-    screen_center_y = INPUT_SIZE[1] // 2
 
     if object_name in objectName:
         return x_coord, y_coord, current_area
